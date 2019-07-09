@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -33,7 +37,11 @@ public class TestBase {
 	public static Properties config=new Properties();
 	public static FileInputStream fis;
 	
-	@BeforeMethod
+	public String log4jConfPath = System.getProperty("user.dir")+"//src//main//resources//properties//log4j.properties";
+	//PropertyConfigurator.configure(log4jConfPath);
+	
+	public static Logger log=Logger.getLogger("devpinoyLogger");
+	
 	@BeforeSuite
 	public void setUp() 
 	{
@@ -49,6 +57,7 @@ public class TestBase {
 			
 			try {
 				config.load(fis);
+				log.debug("Config file is loaded");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,10 +72,14 @@ public class TestBase {
 			
 			try {
 				or.load(fis);
+				log.debug("OR file loaded");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			String log4jConfPath = System.getProperty("user.dir")+"//src//main//resources//properties//log4j.properties";
+			PropertyConfigurator.configure(log4jConfPath);
 			
 			if(config.getProperty("browser").equals("firefox")) {
 				
@@ -83,6 +96,7 @@ public class TestBase {
 			}
 			
 			driver.get(config.getProperty("testsiteurl"));
+			log.debug("Chrome browser Launched");
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicitWait")), TimeUnit.SECONDS);
 			
@@ -90,12 +104,26 @@ public class TestBase {
 		
 	}
 	
-	@AfterMethod
+	public boolean isElementPresent(By by) {
+		
+		try {
+			driver.findElement(by);
+			return true;
+		}
+		
+		catch(NoSuchElementException e) {
+			
+			return false;
+		}
+	}
+	
 	@AfterSuite
 	public void tearDown() {
 		
 		if(driver!=null) {
 			driver.quit();
 		}
+		
+		log.debug("Test Suite execution completed");
 	}
 }

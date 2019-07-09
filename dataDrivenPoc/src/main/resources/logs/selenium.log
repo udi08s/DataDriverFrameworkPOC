@@ -1,0 +1,4 @@
+15:03:15,314 DEBUG devpinoyLogger:99 - Chrome browser Launched
+15:03:17,745 DEBUG devpinoyLogger:21 -  Clicked on Sign-in button
+15:03:19,291 DEBUG devpinoyLogger:23 -  Clicked on Sign-in button
+15:03:52,976 DEBUG devpinoyLogger:127 - Test Suite execution completed
