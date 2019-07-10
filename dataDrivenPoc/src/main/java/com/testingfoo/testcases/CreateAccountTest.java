@@ -5,6 +5,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -14,6 +18,7 @@ import com.testingfoo.base.TestBase;
 public class CreateAccountTest extends TestBase{
 	
 	private WebDriverWait wait;
+
 
 	@Test
 	public void test() throws InterruptedException {
@@ -26,7 +31,7 @@ public class CreateAccountTest extends TestBase{
 		Thread.sleep(5000);
 		
 		
-		String inputText = "udays1@maildrop.cc";
+		String inputText = "udays4@maildrop.cc";
 		WebElement myElement = driver.findElement(By.id("email_create"));
 		String js = "arguments[0].setAttribute('value','"+inputText+"')";
 		((JavascriptExecutor) driver).executeScript(js, myElement);
@@ -88,4 +93,21 @@ public class CreateAccountTest extends TestBase{
 		
 		
 	}
+	
+	@AfterTest
+	public void tearDown() {
+		
+		driver.findElement(By.xpath(or.getProperty("signOutBtn"))).click();
+		
+		driver.findElement(By.xpath(or.getProperty("siteLogo"))).click();
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
