@@ -1,11 +1,14 @@
 package com.testingfoo.testcases;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
@@ -18,10 +21,14 @@ import com.testingfoo.base.TestBase;
 public class CreateAccountTest extends TestBase{
 	
 	private WebDriverWait wait;
+	
 
 
 	@Test
 	public void test() throws InterruptedException {
+		
+		wait=new WebDriverWait(driver,360);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(or.getProperty("signinBtn"))));
 		
 		
 		driver.findElement(By.xpath(or.getProperty("signinBtn"))).click();
@@ -30,8 +37,9 @@ public class CreateAccountTest extends TestBase{
 		//wait=new WebDriverWait(driver,360);
 		Thread.sleep(5000);
 		
+		int randomNumber=(int)(Math.random()*100);
 		
-		String inputText = "udays4@maildrop.cc";
+		String inputText = "udayss"+Integer.toString(randomNumber)+"@maildrop.cc";
 		WebElement myElement = driver.findElement(By.id("email_create"));
 		String js = "arguments[0].setAttribute('value','"+inputText+"')";
 		((JavascriptExecutor) driver).executeScript(js, myElement);
@@ -94,8 +102,15 @@ public class CreateAccountTest extends TestBase{
 		
 	}
 	
-	@AfterTest
+	@AfterMethod
 	public void tearDown() {
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		driver.findElement(By.xpath(or.getProperty("signOutBtn"))).click();
 		
@@ -107,6 +122,7 @@ public class CreateAccountTest extends TestBase{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 	
 	

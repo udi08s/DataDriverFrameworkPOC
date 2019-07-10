@@ -32,7 +32,6 @@ public class TestBase {
 	 */
 	
 	public static WebDriver driver;
-	
 	public static Properties or=new Properties();
 	public static Properties config=new Properties();
 	public static FileInputStream fis;
@@ -95,10 +94,12 @@ public class TestBase {
 				driver=new ChromeDriver();
 			}
 			
-			driver.get(config.getProperty("testsiteurl"));
-			log.debug("Chrome browser Launched");
-			driver.manage().window().maximize();
-			driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicitWait")), TimeUnit.SECONDS);
+			
+			  driver.get(config.getProperty("testsiteurl"));
+			  log.debug("Chrome browser Launched"); driver.manage().window().maximize();
+			  driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty
+			  ("implicitWait")), TimeUnit.SECONDS);
+			 
 			
 		}
 		

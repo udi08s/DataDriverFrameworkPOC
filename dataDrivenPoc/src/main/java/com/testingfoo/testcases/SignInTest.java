@@ -1,8 +1,16 @@
 package com.testingfoo.testcases;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -10,9 +18,20 @@ import com.testingfoo.base.TestBase;
 
 public class SignInTest extends TestBase {
 	
+	private WebDriverWait wait;
+	
+	@BeforeMethod
+	public void setUp() {
+		
+		 driver.get(config.getProperty("testsiteurl"));
+		 log.debug("Chrome browser Launched");
+	}
 	
 	@Test
 	public void test() throws InterruptedException {
+		
+		wait=new WebDriverWait(driver,360);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(or.getProperty("signinBtn"))));
 		
 		driver.findElement(By.xpath(or.getProperty("signinBtn"))).click();
 		log.debug(" Clicked on Sign-in button");
@@ -36,7 +55,7 @@ public class SignInTest extends TestBase {
 		
 	}
 	
-	@AfterTest
+	@AfterMethod
 	public void tearDown() {
 		
 		driver.findElement(By.xpath(or.getProperty("signOutBtn"))).click();
@@ -49,6 +68,7 @@ public class SignInTest extends TestBase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 		
 	}
 	
